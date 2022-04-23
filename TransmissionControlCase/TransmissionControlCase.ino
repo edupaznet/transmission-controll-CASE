@@ -1,4 +1,7 @@
-//*******************************************************
+
+#include "definition.h"
+
+/*//*******************************************************
 // Pin declarations
 //********************************************************
 const byte Neutral = 12;
@@ -21,7 +24,7 @@ bool flag1,flag2,flag3,flag4;
 //unsigned long delayTime = 1000; // Interval in M6 delay
 //unsigned long startTime ;
 //************************************************************  
-
+*/
 void setup()
  {
 
