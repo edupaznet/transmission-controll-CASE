@@ -15,7 +15,6 @@ void setup()
   pinMode(M4,OUTPUT);    //   SOLENOIDES M1-M5 gears (marchas)
   pinMode(M5,OUTPUT);    //   M6 embrague
   pinMode(M6,OUTPUT);    //
-  Serial.begin(9600);
   flag1=flag2=flag3=flag4=0;
   prevValorNeutral= digitalRead(Neutral);
 
@@ -33,14 +32,14 @@ void loop()
 
 
 if (valorNeutral != prevValorNeutral) {
-                  buttonPushedMillis = currentMillis;
+                  shifterMoveMillis = currentMillis;
                   prevValorNeutral = valorNeutral;    
                   M6Ready = true;
                    }
   
   if (M6Ready) {
               digitalWrite(M6, LOW);
-                       if ((unsigned long)(currentMillis - buttonPushedMillis) >= turnOnDelay) {
+                       if ((unsigned long)(currentMillis - shifterMoveMillis) >= turnOnDelay) {
                                        digitalWrite(M6, HIGH);
                                        M6State = true;
                                        M6TurnedOnAt = currentMillis;
@@ -91,12 +90,9 @@ if (valorNeutral != prevValorNeutral) {
                                flag2=flag3=flag4=0;
                                if (flag1== 0){
                                               digitalWrite(M6,LOW);
-                                              Serial.print(flag1);
-                                              Serial.print(" 1°Gear");
                                               flag1=1;
                                               delay(1000);
                                               digitalWrite(M6,flag1);
-                                              Serial.println(flag1);
                                              } 
                                
                               } else
@@ -110,8 +106,6 @@ if (valorNeutral != prevValorNeutral) {
                                          flag2=flag3=flag1=0;
                                          if(flag4==0){ 
                                                        digitalWrite(M6,LOW);
-                                                       Serial.print(flag4);
-                                                       Serial.println("4°Gear");
                                                        flag4=1;
                                                        delay(1000);
                                                        digitalWrite(M6,flag4);
@@ -132,8 +126,6 @@ if (valorNeutral != prevValorNeutral) {
                                                     flag4=flag3=flag1=0;
                                                     if(flag2==0){ 
                                                                   digitalWrite(M6,LOW); 
-                                                                  Serial.print(flag2);
-                                                                  Serial.println("2°Gear");
                                                                   flag2=1;
                                                                   delay(1000);
                                                                   digitalWrite(M6,flag2);
@@ -150,8 +142,6 @@ if (valorNeutral != prevValorNeutral) {
                                                            flag2=flag4=flag1=0;
                                                            if(flag3==0){
                                                                           digitalWrite(M6,LOW);
-                                                                          Serial.print(flag3);
-                                                                          Serial.println("3°Gear");
                                                                           flag3=1;
                                                                           delay(1000);
                                                                           digitalWrite(M6,flag3);
@@ -186,8 +176,6 @@ if (valorNeutral != prevValorNeutral) {
                                    flag2=flag3=flag4=0;
                                    if (flag1== 0){
                                                    digitalWrite(M6,LOW);
-                                                   Serial.print(flag1);
-                                                   Serial.println("1°Gear");
                                                    flag1=1;
                                                    delay(1000);
                                                    digitalWrite(M6,flag1);
@@ -202,8 +190,6 @@ if (valorNeutral != prevValorNeutral) {
                                          flag2=flag3=flag1=0;
                                               if(flag4==0){ 
                                                             digitalWrite(M6,LOW);
-                                                            Serial.print(flag4);
-                                                            Serial.println("4°Gear");
                                                             flag4=1;
                                                             delay(1000);
                                                             digitalWrite(M6,flag4);
@@ -220,9 +206,7 @@ if (valorNeutral != prevValorNeutral) {
                                                       digitalWrite(M4,HIGH);
                                                       flag4=flag3=flag1=0;
                                                       if(flag2==0){ 
-                                                                    digitalWrite(M6,LOW); 
-                                                                    Serial.print(flag2);
-                                                                    Serial.println("2°Gear");
+                                                                    digitalWrite(M6,LOW);
                                                                     flag2=1;
                                                                     delay(1000);
                                                                     digitalWrite(M6,flag2);
@@ -238,8 +222,6 @@ if (valorNeutral != prevValorNeutral) {
                                                             flag2=flag4=flag1=0;
                                                                   if(flag3==0){
                                                                                 digitalWrite(M6,LOW);
-                                                                                Serial.print(flag3);
-                                                                                Serial.println("3°Gear");
                                                                                 flag3=1;
                                                                                 delay(1000);
                                                                                 digitalWrite(M6,flag3);
@@ -274,9 +256,6 @@ if (valorNeutral != prevValorNeutral) {
                                flag2=flag3=flag4=0;
                                       if (flag1== 0){
                                               digitalWrite(M6,LOW);
-                                              Serial.print(flag1);
-                                              Serial.println("1°Gear");
-                                              flag1=1;
                                               delay(1000);
                                               digitalWrite(M6,flag1);
                                                     } 
@@ -293,8 +272,6 @@ if (valorNeutral != prevValorNeutral) {
                                       flag2=flag3=flag1=0;
                                            if(flag4==0){ 
                                                        digitalWrite(M6,LOW);
-                                                       Serial.print(flag4);
-                                                       Serial.println("4°Gear");
                                                        flag4=1;
                                                        delay(1000);
                                                        digitalWrite(M6,flag4);
@@ -312,8 +289,6 @@ if (valorNeutral != prevValorNeutral) {
                                                      flag4=flag3=flag1=0;
                                                          if(flag2==0){ 
                                                                        digitalWrite(M6,LOW); 
-                                                                       Serial.print(flag2);
-                                                                       Serial.println("2°Gear");
                                                                        flag2=1;
                                                                        delay(1000);
                                                                        digitalWrite(M6,flag2);
@@ -329,8 +304,6 @@ if (valorNeutral != prevValorNeutral) {
                                                             flag2=flag4=flag1=0;
                                                                         if(flag3==0){
                                                                                       digitalWrite(M6,LOW);
-                                                                                      Serial.print(flag3);
-                                                                                      Serial.println("3°Gear");
                                                                                       flag3=1;
                                                                                       delay(1000);
                                                                                       digitalWrite(M6,flag3);
@@ -345,14 +318,4 @@ if (valorNeutral != prevValorNeutral) {
 
 //*************************************************************************************************  
 
-//************************************************************************************************
-// Funcion delayM6()
-//************************************************************************************************
-//void delayM6(){
-//  if (( millis()- startTime ) >= delayTime ){
-//           startTime= millis();
-//           digitalWrite(M6,HIGH);
-//           Serial.println("delayM6...");
-//               }
-//  }
        
