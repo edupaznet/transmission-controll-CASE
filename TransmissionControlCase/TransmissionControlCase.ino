@@ -1,34 +1,9 @@
 
 #include "definition.h"
 
-/*//*******************************************************
-// Pin declarations
-//********************************************************
-const byte Neutral = 12;
-const byte Fwd = 11;
-const byte Rev = 10;
-const byte M6 = 9;
-const byte M5 = 8;
-const byte M4 = 13;
-const byte M3 = 6;
-const byte M2 = 5;
-const byte M1 = 4;
-const byte wireC1 = 3;
-const byte wireB1 = 2;
-
-//*****************************************************
-// Global Variables
-//*****************************************************
-int valorNeutral,valorFwd, valorRev, valorC1,valorB1;
-bool flag1,flag2,flag3,flag4;
-//unsigned long delayTime = 1000; // Interval in M6 delay
-//unsigned long startTime ;
-//************************************************************  
-*/
 void setup()
  {
 
-  //startTime=millis();
   pinMode(Neutral,INPUT);
   pinMode(Fwd,INPUT);
   pinMode(Rev,INPUT);
@@ -42,34 +17,55 @@ void setup()
   pinMode(M6,OUTPUT);    //
   Serial.begin(9600);
   flag1=flag2=flag3=flag4=0;
+  prevValorNeutral= digitalRead(Neutral);
 
  }
 
 void loop() 
   
   { 
+  unsigned long currentMillis = millis();
   valorFwd = digitalRead(Fwd);    // cable Fordward de la palanca 
   valorRev = digitalRead(Rev);    // cable Reverse de la palanca
   valorC1 = digitalRead(wireC1);  // proviene del cable C de la palanca
   valorB1 = digitalRead(wireB1);  // proviene del cable B de la palanca
   valorNeutral = digitalRead(Neutral); // cable neutro de la palanca
+
+
+if (valorNeutral != prevValorNeutral) {
+                  buttonPushedMillis = currentMillis;
+                  prevValorNeutral = valorNeutral;    
+                  M6Ready = true;
+                   }
+  
+  if (M6Ready) {
+              digitalWrite(M6, LOW);
+                       if ((unsigned long)(currentMillis - buttonPushedMillis) >= turnOnDelay) {
+                                       digitalWrite(M6, HIGH);
+                                       M6State = true;
+                                       M6TurnedOnAt = currentMillis;
+                                       M6Ready = false;
+                            }
+               }
+  
+
+  
  
   if (valorNeutral == 0 && valorFwd == 1 && valorRev == 1)
-       {  
+            {  
         
               fNeutral(valorB1,valorC1);
-               // Serial.println("Neutral----");
-
+             
                        
             }
             else {
                   if (valorFwd == 0 ){
 
                            fFwd (valorB1, valorC1);
-                           //Serial.println("Fwd-->>");
+                            
                                     } else { 
                                               fRev (valorB1, valorC1);
-                                               //  Serial.println("Rev<<--");
+                                                    
                                            }
                 } 
 
@@ -96,10 +92,11 @@ void loop()
                                if (flag1== 0){
                                               digitalWrite(M6,LOW);
                                               Serial.print(flag1);
-                                              Serial.println("1°Gear");
+                                              Serial.print(" 1°Gear");
                                               flag1=1;
                                               delay(1000);
                                               digitalWrite(M6,flag1);
+                                              Serial.println(flag1);
                                              } 
                                
                               } else
