@@ -256,6 +256,7 @@ if (valorNeutral != prevValorNeutral) {
                                flag2=flag3=flag4=0;
                                       if (flag1== 0){
                                               digitalWrite(M6,LOW);
+                                              flag1=1;
                                               delay(1000);
                                               digitalWrite(M6,flag1);
                                                     } 
